@@ -1,0 +1,20 @@
+<div class="box">
+<h1>Register</h1>
+<form action='/users/' method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<p>First Name: <input type="text" name="user[first_name]"></p>
+	<p>Last Name: <input type="text" name="user[last_name]"></p>
+	<P>Email: <input type="text" name="user[email]"></P>
+	<p>Password <input type="password" name="user[password]"></p>
+	<p><input type="submit" value="Join" name="Join"></p>
+</form>
+</div>
+<div class="box">
+<h1>Login</h1>
+<form action='/sessions/' method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<P>Email: <input type="text" name="email"></P>
+	<p>Password <input type="password" name="password"></p>
+	<p><input type="submit" value="Log In" name="Log In"></p>
+</form>
+</div>

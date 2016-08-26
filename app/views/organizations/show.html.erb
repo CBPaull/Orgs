@@ -1,0 +1,26 @@
+<h1> <%= @organization.name %>
+<% if @organization.members.include?(current_user) %>
+<form action='/memberships/<%= @organization.find_member_id current_user%>' method='post'>
+	<input type='hidden' name='_method' value='delete'>
+	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+	<input type='submit' value='Leave'>
+</form>
+<% else %> 
+<form action='/memberships/' method='post'>
+	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+	<input type='hidden' name='membership[organization_id]' value='<%= @organization.id %>'>
+	<input type='hidden' name='membership[user_id]' value='<%= session[:user_id] %>'>
+	<input type='submit' value='Join'>
+</form>
+<% end %> 
+</h1>
+<p> <%=@organization.description %> </p>
+<br>
+<br>
+
+<h5> Created by: <% if @organization.user.id == session[:user_id] %> YOU <% else %> <%=@organization.user.first_name %> <%= @organization.user.last_name %> <% end %> </h5>
+
+<h5>Members:</h5>
+<% @organization.members.each do |m| %>
+<p><%=m.first_name %> <%= m.last_name %></p>
+<% end %>

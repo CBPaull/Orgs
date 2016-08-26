@@ -1,0 +1,26 @@
+<h1> Hi <%=@user.first_name %> <%=@user.last_name%>!</h1>
+<div class="box">
+<h4>Here are the organizations you may join:</h4>
+<% @organizations.each do |o| %>
+<h5><a href="/organizations/<%=o.id %>"> <%= o.name %> </a></h5> 
+<p>Members: <%= o.memberships.count %></p>
+<p><%= o.description %></p>
+<% if current_user == o.user %>
+<form action='/organizations/<%= o.id %>' method='post'>
+	<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+	<input type='hidden' name='_method' value='delete'>
+	<input type='submit' value='Delete'>
+</form>
+<% end %>
+<% end %>
+</div>
+<div class="box">
+<h4> Create a new Organization</h4>
+<form action="/organizations/" method="post" id="orgform">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<h4> Org Name: <input type="text" name="organization[name]"> </h4>
+	<h4> Description: <textarea rows="4" cols="50" name="organization[description]" form="orgform"> Enter text here </textarea> </h4>
+	<input type="hidden" name="organization[user_id]" value="<%= session[:user_id] %>">
+	<input type="submit" name="Create Organization" value="Create Organization">
+</form>
+</div>
